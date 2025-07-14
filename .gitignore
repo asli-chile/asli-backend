@@ -1,0 +1,5 @@
+node_modules/
+sinuous-pact-465518-q3-4f2769ff1cf9.json
+.env
+*.log
+.DS_Store
