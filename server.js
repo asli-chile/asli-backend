@@ -2,12 +2,23 @@ const express = require('express');
 const cors = require('cors');
 const { google } = require('googleapis');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Si existe la variable de entorno GOOGLE_KEY_JSON, escribe el archivo temporalmente
+if (process.env.GOOGLE_KEY_JSON) {
+  const keyFilePath = path.join(__dirname, 'google-key.json');
+  fs.writeFileSync(keyFilePath, process.env.GOOGLE_KEY_JSON);
+  process.env.GOOGLE_KEYFILE = keyFilePath;
+}
+
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://asli.cl', 'http://localhost:5500'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Configurar Google Sheets con cuenta de servicio
